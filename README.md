@@ -1,155 +1,17 @@
-![The Buf logo](./.github/buf-logo.svg)
+Derivadas una copia de esta Licencia; y
+Debe hacer que todos los archivos modificados incluyan avisos destacados que indiquen que usted modificó los archivos; y
+Debe conservar, en la forma Fuente de cualquier Trabajo Derivado que distribuya, todos los avisos de derechos de autor, patentes, marcas comerciales y atribución de la forma Fuente del Trabajo, excluyendo aquellos avisos que no pertenecen a ninguna parte de los Trabajos Derivados; y
+Si la Obra incluye un archivo de texto de " AVISO " como parte de su distribución, cualquier Obra Derivada que distribuya deberá incluir una copia legible de los avisos de atribución contenidos en dicho archivo, excluyendo aquellos que no pertenezcan a ninguna parte de las Obras Derivadas, en al menos uno de los siguientes lugares: en un archivo de texto de AVISO distribuido como parte de las Obras Derivadas; en el formato o la documentación fuente, si se proporciona junto con las Obras Derivadas; o en una visualización generada por las Obras Derivadas, siempre que dichos avisos de terceros aparezcan habitualmente. El contenido del archivo de AVISO es solo informativo y no modifica la Licencia. Puede añadir sus propios avisos de atribución en las Obras Derivadas que distribuya, junto con el texto del AVISO de la Obra o como apéndice, siempre que dichos avisos de atribución adicionales no puedan interpretarse como una modificación de la Licencia.
+Usted puede agregar Su propia declaración de derechos de autor a Sus modificaciones y puede proporcionar términos y condiciones de licencia adicionales o diferentes para el uso, reproducción o distribución de Sus modificaciones, o para cualquiera de dichos Trabajos Derivados en su totalidad, siempre que Su uso, reproducción y distribución del Trabajo cumpla con las condiciones establecidas en esta Licencia.
 
-# Protobuf-ES
+5. Presentación de Contribuciones . Salvo que Usted indique explícitamente lo contrario, cualquier Contribución que Usted envíe intencionalmente al Licenciante para su inclusión en la Obra se regirá por los términos y condiciones de esta Licencia, sin términos ni condiciones adicionales. No obstante lo anterior, nada de lo aquí dispuesto sustituirá ni modificará los términos de cualquier contrato de licencia independiente que usted haya firmado con el Licenciante en relación con dichas Contribuciones.
 
-[![License](https://img.shields.io/github/license/bufbuild/protobuf-es?color=blue)](./LICENSE) [![NPM Version](https://img.shields.io/npm/v/@bufbuild/protobuf/latest?color=green&label=%40bufbuild%2Fprotobuf)](https://www.npmjs.com/package/@bufbuild/protobuf) [![NPM Version](https://img.shields.io/npm/v/@bufbuild/protoplugin/latest?color=green&label=%40bufbuild%2Fprotoplugin)](https://www.npmjs.com/package/@bufbuild/protoplugin) [![NPM Version](https://img.shields.io/npm/v/@bufbuild/protoc-gen-es/latest?color=green&label=%40bufbuild%2Fprotoc-gen-es)](https://www.npmjs.com/package/@bufbuild/protoc-gen-es)
+6. Marcas comerciales . Esta Licencia no autoriza el uso de los nombres comerciales, marcas registradas, marcas de servicio ni nombres de productos del Licenciante, salvo que sea necesario para el uso razonable y habitual al describir el origen de la Obra y reproducir el contenido del archivo AVISO.
 
-A complete implementation of [Protocol Buffers](https://protobuf.dev/) in TypeScript,
-suitable for web browsers, Node.js, and Deno, created by [Buf](https://buf.build).
+7. Exención de garantía . Salvo que lo exija la legislación aplicable o se acuerde por escrito, el Licenciante proporciona la Obra (y cada Colaborador proporciona sus Contribuciones) "TAL CUAL", SIN GARANTÍAS NI CONDICIONES DE NINGÚN TIPO, ni expresas ni implícitas, incluyendo, entre otras, las garantías o condiciones de TÍTULO, NO INFRACCIÓN, COMERCIABILIDAD o IDONEIDAD PARA UN FIN DETERMINADO. Usted es el único responsable de determinar la idoneidad del uso o la redistribución de la Obra y asume cualquier riesgo asociado con el ejercicio de los permisos otorgados bajo esta Licencia.
 
-Protobuf-ES is the only fully-compliant JavaScript Protobuf library that passes the
-Protobuf conformance tests—[read more on our blog][blog-post].
+8. Limitación de responsabilidad . En ningún caso ni bajo ninguna teoría legal, ya sea por agravio (incluida la negligencia), contrato o de cualquier otra manera, a menos que lo exija la ley aplicable (como actos deliberados y de negligencia grave) o se acuerde por escrito, ningún Colaborador será responsable ante Usted por daños, incluidos los daños directos, indirectos, especiales, incidentales o consecuentes de cualquier naturaleza que surjan como resultado de esta Licencia o del uso o la imposibilidad de usar la Obra (incluidos, entre otros, los daños por pérdida de prestigio, interrupción del trabajo, fallo o mal funcionamiento informático, o cualquier otro daño o pérdida comercial), incluso si dicho Colaborador ha sido advertido de la posibilidad de dichos daños.
 
-Protobuf-ES's companion RPC library is [Connect-ES](https://github.com/connectrpc/connect-es),
-which supports the Connect, gRPC, and gRPC-Web protocols.
+9. Aceptación de Garantía o Responsabilidad Adicional . Al redistribuir la Obra o sus Obras Derivadas, Usted podrá optar por ofrecer y cobrar una tarifa por la aceptación de soporte, garantía, indemnización u otras obligaciones y/o derechos de responsabilidad conforme a esta Licencia. Sin embargo, al aceptar dichas obligaciones, Usted actuará únicamente en su propio nombre y bajo su exclusiva responsabilidad, no en nombre de ningún otro Colaborador, y únicamente si acepta indemnizar, defender y eximir de responsabilidad a cada Colaborador por cualquier responsabilidad incurrida o reclamación presentada contra él por la aceptación de dicha garantía o responsabilidad adicional.
 
-## What is Protocol Buffers?
-
-In a nutshell, Protocol Buffers (aka Protobuf) has two main functions:
-
-- It's a language for writing schemas for your data.
-- It defines a binary format for serializing your data.
-
-These two independent traits work together to allow your project and everyone who interacts with it to define messages,
-fields, and service APIs in the exact same way. In a practical sense as it relates to **Protobuf-ES**, this means no
-more disparate JSON types all over the place. Instead, you define a common schema in a Protobuf file, such as:
-
-```proto
-syntax = "proto3";
-
-message User {
-  string first_name = 1;
-  string last_name = 2;
-  bool active = 3;
-  User manager = 4;
-  repeated string locations = 5;
-  map<string, string> projects = 6;
-}
-```
-
-You can then compile it to ECMAScript with `buf` or `protoc`, and use it like this:
-
-```typescript
-import { UserSchema } from "./gen/user_pb.js";
-import { create, toBinary, toJson } from "@bufbuild/protobuf";
-
-let user = create(UserSchema, {
-  firstName: "Homer",
-  lastName: "Simpson",
-  active: true,
-  locations: ["Springfield"],
-  projects: { SPP: "Springfield Power Plant" },
-  manager: {
-    firstName: "Montgomery",
-    lastName: "Burns",
-  },
-});
-
-const bytes = toBinary(UserSchema, user);
-const json = toJson(UserSchema, user);
-```
-
-The benefits of using Protobuf extend to any application that interacts with yours, because the Protobuf file above
-can be used to generate types in many languages. The added bonus is that no one has to write any boilerplate code to
-make this happen. [Code generators](https://www.npmjs.com/package/@bufbuild/protoc-gen-es) handle all of this for you.
-
-Protobuf also allows you to serialize this structured data. Your application running in the browser can send
-a `User` object to a backend running an entirely different language, but using the exact same definition. Using an RPC
-framework like [Connect-ES](https://github.com/connectrpc/connect-es), your data is serialized into bytes on the wire
-and then deserialized at its destination using the defined schema.
-
-## Quickstart
-
-1. Install the runtime library, code generator, and the [Buf CLI](https://buf.build/docs/ecosystem/cli-overview):
-
-   ```shellsession
-   npm install @bufbuild/protobuf
-   npm install --save-dev @bufbuild/protoc-gen-es @bufbuild/buf
-   ```
-
-2. Create a `buf.gen.yaml` file that looks like this:
-
-   ```yaml
-   # Learn more: https://buf.build/docs/configuration/v2/buf-gen-yaml
-   version: v2
-   inputs:
-     - directory: proto
-   plugins:
-     - local: protoc-gen-es
-       opt: target=ts
-       out: src/gen
-   ```
-
-3. Download the [example.proto](packages/protobuf-example/proto/example.proto) into a `proto` directory:
-
-   ```shellsession
-   mkdir proto
-   curl https://raw.githubusercontent.com/bufbuild/protobuf-es/main/packages/protobuf-example/proto/example.proto > proto/example.proto
-   ```
-
-4. Generate your code with `buf` or [`protoc`]:
-
-   ```shellsession
-   npx buf generate
-   ```
-
-You should now see a generated file at `src/gen/example_pb.ts` that contains a type `User`, and a schema `UserSchema`.
-From here, you can begin to work with your schema.
-
-## Documentation
-
-- [Manual](MANUAL.md) - Explains all aspects of using Protobuf with ECMAScript.
-- [Code example](packages/protobuf-example) - Example code that uses Protobuf to manage a persistent list of users.
-- [Plugin example](packages/protoplugin-example) - Shows how to write a custom plugin to generate Twirp clients from
-  Protobuf service definitions.
-
-## Packages
-
-- [@bufbuild/protobuf](https://www.npmjs.com/package/@bufbuild/protobuf):
-  Provides the runtime library, containing base types, generated well-known types, and core functionality.
-- [@bufbuild/protoc-gen-es](https://www.npmjs.com/package/@bufbuild/protoc-gen-es):
-  Provides the code generator plugin `protoc-gen-es`. The code it generates depends on `@bufbuild/protobuf`.
-- [@bufbuild/protoplugin](https://www.npmjs.com/package/@bufbuild/protoplugin):
-  Helps to create your own code generator plugin. The code it generates depends on `@bufbuild/protobuf`.
-
-## Ecosystem
-
-- [Connect-ES](https://github.com/connectrpc/connect-es):
-  Type-safe APIs with Protobuf and TypeScript
-- [Connect-ES examples](https://github.com/connectrpc/examples-es):
-  Examples for using Connect with various TypeScript web frameworks and tooling
-- [protobuf-conformance](https://github.com/bufbuild/protobuf-conformance):
-  A repository running the Protobuf conformance tests against various libraries.
-- [Buf Studio](https://buf.build/studio): Web UI for ad-hoc RPCs
-
-## Compatibility
-
-All maintained releases of Node.js ([Current, Active LTS, and the Maintenance LTS release](https://nodejs.org/en/about/previous-releases))
-are supported.
-
-The latest [Deno LTS version](https://docs.deno.com/runtime/fundamentals/stability_and_releases/) is supported.
-
-[Same as Definitely Typed](https://github.com/DefinitelyTyped/DefinitelyTyped#support-window),
-we support versions of TypeScript that are less than 2 years old, with default compiler
-settings. Note that for some changes in TypeScript, it is impossible to support both
-new and old versions in the support window. We break the tie by supporting the newer
-version.
-
-## Copyright
-
-The [code to encode and decode varint](packages/protobuf/src/wire/varint.ts) is Copyright 2008 Google Inc., licensed
-under BSD-3-Clause.
-All other files are licensed under Apache-2.0, see [LICENSE](LICENSE).
-
-[blog-post]: https://buf.build/blog/protobuf-conformance
-[`protoc`]: MANUAL.md#generate-with-protoc
+FIN DE LOS TÉRMINOS Y CONDICIONES
