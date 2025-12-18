@@ -1,155 +1,202 @@
-![The Buf logo](./.github/buf-logo.svg)
 
-# Protobuf-ES
+                                 Licencia Apache
+                           Versión 2.0, enero de 2004
+                        http://www.apache.org/licenses/
 
-[![License](https://img.shields.io/github/license/bufbuild/protobuf-es?color=blue)](./LICENSE) [![NPM Version](https://img.shields.io/npm/v/@bufbuild/protobuf/latest?color=green&label=%40bufbuild%2Fprotobuf)](https://www.npmjs.com/package/@bufbuild/protobuf) [![NPM Version](https://img.shields.io/npm/v/@bufbuild/protoplugin/latest?color=green&label=%40bufbuild%2Fprotoplugin)](https://www.npmjs.com/package/@bufbuild/protoplugin) [![NPM Version](https://img.shields.io/npm/v/@bufbuild/protoc-gen-es/latest?color=green&label=%40bufbuild%2Fprotoc-gen-es)](https://www.npmjs.com/package/@bufbuild/protoc-gen-es)
+   TÉRMINOS Y CONDICIONES DE USO, REPRODUCCIÓN Y DISTRIBUCIÓN
 
-A complete implementation of [Protocol Buffers](https://protobuf.dev/) in TypeScript,
-suitable for web browsers, Node.js, and Deno, created by [Buf](https://buf.build).
+   1. Definiciones.
 
-Protobuf-ES is the only fully-compliant JavaScript Protobuf library that passes the
-Protobuf conformance tests—[read more on our blog][blog-post].
+      "Licencia" significará los términos y condiciones para el uso, reproducción,
+      y distribución según se define en las Secciones 1 a 9 de este documento.
 
-Protobuf-ES's companion RPC library is [Connect-ES](https://github.com/connectrpc/connect-es),
-which supports the Connect, gRPC, and gRPC-Web protocols.
+      "Licenciante" significará el propietario de los derechos de autor o la entidad autorizada por
+      el propietario de los derechos de autor que concede la licencia.
 
-## What is Protocol Buffers?
+      "Persona Jurídica" significa la unión de la entidad actuante y todas
+      otras entidades que controlan, son controladas por, o están bajo control común
+      control con esa entidad. A los efectos de esta definición,
+      "control" significa (i) el poder, directo o indirecto, de hacer que
+      dirección o gestión de dicha entidad, ya sea por contrato o
+      de lo contrario, o (ii) la propiedad del cincuenta por ciento (50%) o más de la
+      acciones en circulación, o (iii) la propiedad beneficiosa de dicha entidad.
 
-In a nutshell, Protocol Buffers (aka Protobuf) has two main functions:
+      "Usted" (o "Su") significará una persona física o jurídica
+      ejercer los permisos otorgados por esta Licencia.
 
-- It's a language for writing schemas for your data.
-- It defines a binary format for serializing your data.
+      Por formato "fuente" se entenderá el formato preferido para realizar modificaciones,
+      Incluyendo, entre otros, el código fuente del software y la documentación.
+      archivos de origen y configuración.
 
-These two independent traits work together to allow your project and everyone who interacts with it to define messages,
-fields, and service APIs in the exact same way. In a practical sense as it relates to **Protobuf-ES**, this means no
-more disparate JSON types all over the place. Instead, you define a common schema in a Protobuf file, such as:
+      Por forma "objeto" se entenderá cualquier forma resultante de la manipulación mecánica.
+      transformación o traducción de una forma Fuente, incluyendo pero no limitado a:
+      no limitado al código objeto compilado, documentación generada,
+      y conversiones a otros tipos de medios.
 
-```proto
-syntax = "proto3";
+      "Obra" significará la obra de autoría, ya sea en el código fuente o
+      Forma de objeto, puesta a disposición bajo la Licencia, como se indica mediante un
+      Aviso de derechos de autor que se incluye o se adjunta a la obra.
+      (se proporciona un ejemplo en el Apéndice a continuación).
 
-message User {
-  string first_name = 1;
-  string last_name = 2;
-  bool active = 3;
-  User manager = 4;
-  repeated string locations = 5;
-  map<string, string> projects = 6;
-}
-```
+      "Obras derivadas" significará cualquier obra, ya sea en origen o en objeto.
+      forma, que se basa en (o se deriva de) la Obra y para la cual la
+      revisiones editoriales, anotaciones, elaboraciones u otras modificaciones
+      representan, en su conjunto, una obra original de autoría. A los efectos
+      de esta Licencia, las Obras Derivadas no incluirán obras que permanezcan
+      separables de, o simplemente enlazados (o ligados por nombre) a las interfaces de,
+      la Obra y Obras Derivadas de la misma.
 
-You can then compile it to ECMAScript with `buf` or `protoc`, and use it like this:
+      "Contribución" significará cualquier obra de autoría, incluyendo
+      la versión original de la Obra y cualquier modificación o adición
+      a esa Obra o Obras Derivadas de la misma, que sea intencionalmente
+      Enviado al Licenciante para su inclusión en la Obra por el propietario de los derechos de autor.
+      o por una persona física o jurídica autorizada para presentar en nombre de
+      El titular de los derechos de autor. A efectos de esta definición, "enviado"
+      significa cualquier forma de comunicación electrónica, verbal o escrita enviada
+      al Licenciante o sus representantes, incluidos, entre otros:
+      comunicación en listas de correo electrónico, sistemas de control de código fuente,
+      y sistemas de seguimiento de problemas gestionados por, o en nombre de, la
+      Licenciante con el propósito de discutir y mejorar la Obra, pero
+      excluyendo la comunicación que esté marcada de forma visible o de otro modo
+      designado por escrito por el propietario de los derechos de autor como "No es una contribución".
 
-```typescript
-import { UserSchema } from "./gen/user_pb.js";
-import { create, toBinary, toJson } from "@bufbuild/protobuf";
+      "Contribuyente" significará el Licenciante y cualquier persona física o jurídica
+      en nombre de quien el Licenciante ha recibido una Contribución y
+      posteriormente incorporados a la Obra.
 
-let user = create(UserSchema, {
-  firstName: "Homer",
-  lastName: "Simpson",
-  active: true,
-  locations: ["Springfield"],
-  projects: { SPP: "Springfield Power Plant" },
-  manager: {
-    firstName: "Montgomery",
-    lastName: "Burns",
-  },
-});
+   2. Concesión de licencia de derechos de autor. Sujeto a los términos y condiciones de
+      esta Licencia, cada Colaborador le otorga a Usted una licencia perpetua,
+      mundial, no exclusivo, sin cargo, libre de regalías, irrevocable
+      licencia de derechos de autor para reproducir, preparar trabajos derivados de,
+      exhibir públicamente, ejecutar públicamente, sublicenciar y distribuir el
+      Obra y dichas Obras Derivadas en forma Fuente u Objeto.
 
-const bytes = toBinary(UserSchema, user);
-const json = toJson(UserSchema, user);
-```
+   3. Concesión de licencia de patente. Sujeto a los términos y condiciones de
+      esta Licencia, cada Colaborador le otorga a Usted una licencia perpetua,
+      mundial, no exclusivo, sin cargo, libre de regalías, irrevocable
+      (excepto lo establecido en esta sección) licencia de patente para hacer, hacer hacer,
+      utilizar, ofrecer vender, vender, importar y de otro modo transferir la Obra,
+      cuando dicha licencia se aplique únicamente a aquellas reivindicaciones de patentes licenciables
+      por dicho Colaborador que sean necesariamente infringidos por su
+      Contribución(es) sola(s) o por combinación de sus Contribuciones
+      con la Obra a la que se envió dicha(s) Contribución(es). Si usted
+      iniciar un litigio de patentes contra cualquier entidad (incluida una
+      demanda cruzada o reconvención en una demanda) alegando que la Obra
+      o una Contribución incorporada dentro de la Obra constituye una contribución directa
+      o infracción contributiva de patentes, entonces cualquier licencia de patente
+      otorgado a Usted bajo esta Licencia para esa Obra terminará
+      a partir de la fecha en que se presente dicho litigio.
 
-The benefits of using Protobuf extend to any application that interacts with yours, because the Protobuf file above
-can be used to generate types in many languages. The added bonus is that no one has to write any boilerplate code to
-make this happen. [Code generators](https://www.npmjs.com/package/@bufbuild/protoc-gen-es) handle all of this for you.
+   4. Redistribución. Puede reproducir y distribuir copias del
+      Obra u obras derivadas de la misma en cualquier medio, con o sin
+      modificaciones, y en forma de Fuente u Objeto, siempre que Usted
+      cumplir las siguientes condiciones:
 
-Protobuf also allows you to serialize this structured data. Your application running in the browser can send
-a `User` object to a backend running an entirely different language, but using the exact same definition. Using an RPC
-framework like [Connect-ES](https://github.com/connectrpc/connect-es), your data is serialized into bytes on the wire
-and then deserialized at its destination using the defined schema.
+      (a) Debe proporcionar a cualquier otro destinatario de la Obra o
+          Obras derivadas una copia de esta Licencia; y
 
-## Quickstart
+      (b) Debe hacer que todos los archivos modificados incluyan avisos destacados
+          indicando que usted modificó los archivos; y
 
-1. Install the runtime library, code generator, and the [Buf CLI](https://buf.build/docs/ecosystem/cli-overview):
+      (c) Debe conservar, en la forma fuente de cualquier Trabajo Derivado
+          que Usted distribuya, todos los derechos de autor, patentes, marcas registradas y
+          avisos de atribución de la forma fuente de la Obra,
+          excluyendo aquellos avisos que no pertenecen a ninguna parte de
+          las Obras Derivadas; y
 
-   ```shellsession
-   npm install @bufbuild/protobuf
-   npm install --save-dev @bufbuild/protoc-gen-es @bufbuild/buf
-   ```
+      (d) Si la Obra incluye un archivo de texto "AVISO" como parte de su
+          distribución, entonces cualquier Trabajo Derivado que Usted distribuya debe
+          Incluir una copia legible de los avisos de atribución contenidos
+          dentro de dicho archivo de AVISO, excluyendo aquellos avisos que no
+          Pertenecen a cualquier parte de las Obras Derivadas, en al menos una
+          de los siguientes lugares: dentro de un archivo de texto de AVISO distribuido
+          como parte de las Obras Derivadas; dentro de la forma Fuente o
+          documentación, si se proporciona junto con las Obras Derivadas; o,
+          dentro de una visualización generada por las Obras Derivadas, si y
+          dondequiera que aparezcan normalmente dichos avisos de terceros. El contenido
+          del archivo AVISO son sólo para fines informativos y
+          No modifique la licencia. Puede añadir su propia atribución.
+          avisos dentro de las Obras Derivadas que Usted distribuye, junto con
+          o como una adición al texto del AVISO de la Obra, siempre que
+          que dichos avisos de atribución adicionales no pueden interpretarse
+          como modificación de la Licencia.
 
-2. Create a `buf.gen.yaml` file that looks like this:
+      Puede agregar su propia declaración de derechos de autor a sus modificaciones y
+      Puede proporcionar términos y condiciones de licencia adicionales o diferentes
+      para el uso, reproducción o distribución de sus modificaciones, o
+      para dichas Obras Derivadas en su conjunto, siempre que Su uso,
+      La reproducción y distribución de la Obra cumple de otro modo con
+      las condiciones establecidas en esta Licencia.
 
-   ```yaml
-   # Learn more: https://buf.build/docs/configuration/v2/buf-gen-yaml
-   version: v2
-   inputs:
-     - directory: proto
-   plugins:
-     - local: protoc-gen-es
-       opt: target=ts
-       out: src/gen
-   ```
+   5. Presentación de contribuciones. Salvo que usted indique explícitamente lo contrario,
+      cualquier Contribución enviada intencionalmente para su inclusión en el Trabajo
+      por Usted al Licenciante se realizará bajo los términos y condiciones de
+      esta Licencia, sin términos ni condiciones adicionales.
+      No obstante lo anterior, nada de lo aquí dispuesto sustituirá o modificará
+      los términos de cualquier acuerdo de licencia independiente que haya ejecutado
+      con el Licenciante respecto de dichas Contribuciones.
 
-3. Download the [example.proto](packages/protobuf-example/proto/example.proto) into a `proto` directory:
+   6. Marcas comerciales. Esta Licencia no otorga permiso para usar la marca comercial.
+      nombres, marcas comerciales, marcas de servicio o nombres de productos del Licenciante,
+      excepto cuando sea necesario para el uso razonable y habitual al describir el
+      origen de la Obra y reproducir el contenido del archivo AVISO.
 
-   ```shellsession
-   mkdir proto
-   curl https://raw.githubusercontent.com/bufbuild/protobuf-es/main/packages/protobuf-example/proto/example.proto > proto/example.proto
-   ```
+   7. Exclusión de garantía. A menos que lo exija la ley aplicable o
+      acordado por escrito, el Licenciante proporciona la Obra (y cada
+      El colaborador proporciona sus contribuciones) "TAL CUAL",
+      SIN GARANTÍAS NI CONDICIONES DE NINGÚN TIPO, ya sean expresas o
+      implícitas, incluidas, sin limitación, cualquier garantía o condición
+      de TÍTULO, NO INFRACCIÓN, COMERCIABILIDAD o IDONEIDAD PARA UN
+      PROPÓSITO PARTICULAR. Usted es el único responsable de determinar el
+      la idoneidad de usar o redistribuir la Obra y asumir cualquier
+      riesgos asociados con el ejercicio de los permisos bajo esta Licencia.
 
-4. Generate your code with `buf` or [`protoc`]:
+   8. Limitación de responsabilidad. En ningún caso ni bajo ninguna teoría legal,
+      ya sea por agravio (incluida la negligencia), contrato o de otro modo,
+      a menos que lo exija la ley aplicable (como de forma deliberada y grosera)
+      actos negligentes) o acordados por escrito, cualquier Colaborador será
+      responsable ante Usted por daños, incluidos los directos, indirectos, especiales,
+      daños incidentales o consecuentes de cualquier carácter que surjan como resultado de
+      resultado de esta Licencia o del uso o la imposibilidad de usar la
+      Trabajo (incluidos, entre otros, daños por pérdida de buena voluntad,
+      paro laboral, fallo o mal funcionamiento del ordenador, o cualquier otro
+      otros daños o pérdidas comerciales), incluso si dicho Contribuyente
+      ha sido informado de la posibilidad de tales daños.
 
-   ```shellsession
-   npx buf generate
-   ```
+   9. Aceptación de garantía o responsabilidad adicional. Durante la redistribución
+      la Obra o las Obras Derivadas de la misma, puede optar por ofrecer,
+      y cobrar una tarifa por la aceptación del soporte, garantía, indemnización,
+      u otras obligaciones de responsabilidad y/o derechos consistentes con este
+      Licencia. Sin embargo, al aceptar dichas obligaciones, Usted podrá actuar únicamente
+      en su propio nombre y bajo su exclusiva responsabilidad, no en nombre
+      de cualquier otro Colaborador, y solo si Usted acepta indemnizar,
+      defender y eximir de responsabilidad a cada Colaborador ante cualquier responsabilidad
+      incurridos por, o reclamaciones interpuestas contra, dicho Contribuyente por razón
+      de su aceptación de dicha garantía o responsabilidad adicional.
 
-You should now see a generated file at `src/gen/example_pb.ts` that contains a type `User`, and a schema `UserSchema`.
-From here, you can begin to work with your schema.
+   FIN DE LOS TÉRMINOS Y CONDICIONES
 
-## Documentation
+   APÉNDICE: Cómo aplicar la Licencia Apache a su trabajo.
 
-- [Manual](MANUAL.md) - Explains all aspects of using Protobuf with ECMAScript.
-- [Code example](packages/protobuf-example) - Example code that uses Protobuf to manage a persistent list of users.
-- [Plugin example](packages/protoplugin-example) - Shows how to write a custom plugin to generate Twirp clients from
-  Protobuf service definitions.
+      Para aplicar la Licencia Apache a su trabajo, adjunte lo siguiente
+      Aviso estándar, con los campos entre corchetes "[]"
+      reemplazado con su propia información de identificación. (No incluya
+      ¡los corchetes!) El texto debe estar entre paréntesis apropiados.
+      Sintaxis de comentarios para el formato de archivo. También recomendamos que
+      El nombre del archivo o clase y la descripción del propósito se incluirán en el
+      La misma "página impresa" que el aviso de derechos de autor para facilitar su lectura.
+      identificación dentro de archivos de terceros.
 
-## Packages
+   Copyright [yyyy] [nombre del propietario de los derechos de autor]
 
-- [@bufbuild/protobuf](https://www.npmjs.com/package/@bufbuild/protobuf):
-  Provides the runtime library, containing base types, generated well-known types, and core functionality.
-- [@bufbuild/protoc-gen-es](https://www.npmjs.com/package/@bufbuild/protoc-gen-es):
-  Provides the code generator plugin `protoc-gen-es`. The code it generates depends on `@bufbuild/protobuf`.
-- [@bufbuild/protoplugin](https://www.npmjs.com/package/@bufbuild/protoplugin):
-  Helps to create your own code generator plugin. The code it generates depends on `@bufbuild/protobuf`.
+   Con licencia Apache, versión 2.0 (la "Licencia");
+   No puedes usar este archivo excepto en cumplimiento con la Licencia.
+   Puede obtener una copia de la Licencia en
 
-## Ecosystem
+       http://www.apache.org/licenses/LICENCIA-2.0
 
-- [Connect-ES](https://github.com/connectrpc/connect-es):
-  Type-safe APIs with Protobuf and TypeScript
-- [Connect-ES examples](https://github.com/connectrpc/examples-es):
-  Examples for using Connect with various TypeScript web frameworks and tooling
-- [protobuf-conformance](https://github.com/bufbuild/protobuf-conformance):
-  A repository running the Protobuf conformance tests against various libraries.
-- [Buf Studio](https://buf.build/studio): Web UI for ad-hoc RPCs
-
-## Compatibility
-
-All maintained releases of Node.js ([Current, Active LTS, and the Maintenance LTS release](https://nodejs.org/en/about/previous-releases))
-are supported.
-
-The latest [Deno LTS version](https://docs.deno.com/runtime/fundamentals/stability_and_releases/) is supported.
-
-[Same as Definitely Typed](https://github.com/DefinitelyTyped/DefinitelyTyped#support-window),
-we support versions of TypeScript that are less than 2 years old, with default compiler
-settings. Note that for some changes in TypeScript, it is impossible to support both
-new and old versions in the support window. We break the tie by supporting the newer
-version.
-
-## Copyright
-
-The [code to encode and decode varint](packages/protobuf/src/wire/varint.ts) is Copyright 2008 Google Inc., licensed
-under BSD-3-Clause.
-All other files are licensed under Apache-2.0, see [LICENSE](LICENSE).
-
-[blog-post]: https://buf.build/blog/protobuf-conformance
-[`protoc`]: MANUAL.md#generate-with-protoc
+   A menos que lo exija la ley aplicable o se acuerde por escrito, el software
+   distribuido bajo la Licencia se distribuye "TAL CUAL",
+   SIN GARANTÍAS NI CONDICIONES DE NINGÚN TIPO, ya sean expresas o implícitas.
+   Consulte la Licencia para conocer los permisos y el idioma específico que rigen.
+   limitaciones bajo la Licencia.
